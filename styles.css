@@ -1,44 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Consolas:wght@400;700&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
-    margin: 0;
-    font-family: Consolas, monospace;
     display: flex;
     height: 100vh;
+    font-family: "Consolas", monospace;
     background: #0A1A2F;
     color: white;
+    overflow: hidden;
 }
 
 #sidebar {
     width: 260px;
+    min-width: 260px;
     padding: 20px;
     background: #0A1A2F;
     border-right: 3px solid #14A5FF;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
 }
 
 #sidebar h1 {
-    font-size: 22px;
-    margin-top: 0;
-    margin-bottom: 20px;
+    font-size: 24px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 #sidebar .ultra {
-    color: #14A5FF;
+    color: #F2EFE9;
 }
 
 .block {
-    margin-bottom: 25px;
     background: #112233;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid #143A66;
+    margin-bottom: 20px;
 }
 
 .block h3 {
-    margin-top: 0;
     font-size: 14px;
+    margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #F2EFE9;
@@ -75,8 +81,8 @@ input, select {
 }
 
 #canvas {
-    flex: 1;
-    background: white;
-    display: block;
+    flex-grow: 1;
+    background: #FFFFFF;
     cursor: crosshair;
+    display: block;
 }
