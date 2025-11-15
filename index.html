@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>osemiSCAD — Mini CAD Técnico</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="sidebar">
+    <h2>osemiSCAD</h2>
+
+    <div class="section">
+        <h3>Herramientas</h3>
+        <button onclick="setMode('line')">Línea</button>
+        <button onclick="setMode('rect')">Rectángulo</button>
+        <button onclick="setMode('circle')">Círculo</button>
+        <button onclick="undo()">Deshacer</button>
+    </div>
+
+    <div class="section">
+        <h3>Cuadrícula</h3>
+        <label>Tamaño (px):</label>
+        <input type="number" id="gridSize" value="25" onchange="setGridSize()">
+        <label>Mostrar cuadrícula:</label>
+        <input type="checkbox" id="toggleGrid" checked onchange="toggleGrid()">
+    </div>
+
+</div>
+
+<canvas id="canvas" width="1300" height="900"></canvas>
+
+<script src="script.js"></script>
+</body>
+</html>
