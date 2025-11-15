@@ -4,7 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>osemiSCAD ULTRA</title>
+    <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos básicos para asegurar que el canvas y sidebar funcionen */
+        body {
+            margin: 0;
+            font-family: 'Consolas', monospace;
+            background-color: #0a1a2b;
+            color: #f5f5f5;
+        }
+        #sidebar {
+            width: 300px;
+            height: 100vh;
+            background-color: #112240;
+            float: left;
+            padding: 15px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        #canvas {
+            margin-left: 300px;
+            display: block;
+            background-color: #ffffff;
+        }
+        button {
+            background-color: #22334d;
+            color: #f5f5f5;
+            border: none;
+            padding: 5px 10px;
+            margin: 3px 0;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div id="sidebar">
@@ -24,15 +56,15 @@
 
         <div class="block">
             <h3>Color & Opacidad</h3>
-            <input type="color" id="colorPicker" value="#14A5FF" onchange="setColor()">
-            <label>Opacidad: <input type="range" min="0" max="1" step="0.05" id="alpha" value="1" onchange="setAlpha()"></label>
+            <input type="color" id="colorPicker" value="#14A5FF">
+            <label>Opacidad: <input type="range" min="0" max="1" step="0.05" id="alpha" value="1"></label>
         </div>
 
         <div class="block">
             <h3>Grosor & Unidades</h3>
-            <label>Grosor: <input type="number" id="lineWidth" min="1" max="10" value="2" onchange="setLineWidth()"></label>
+            <label>Grosor: <input type="number" id="lineWidth" min="1" max="10" value="2"></label>
             <label>Unidades: 
-                <select id="units" onchange="setUnit()">
+                <select id="units">
                     <option value="px">px</option>
                     <option value="cm">cm</option>
                     <option value="m">m</option>
@@ -42,18 +74,18 @@
 
         <div class="block">
             <h3>Cuadrícula</h3>
-            <label>Tamaño: <input type="number" id="gridSize" value="25" onchange="setGridSize()"></label>
-            <label><input type="checkbox" id="gridToggle" checked onchange="toggleGrid()"> Mostrar cuadrícula</label>
+            <label>Tamaño: <input type="number" id="gridSize" value="25"></label>
+            <label><input type="checkbox" id="gridToggle" checked> Mostrar cuadrícula</label>
         </div>
 
         <div class="block">
             <h3>Capas</h3>
             <input type="text" id="layerName" placeholder="Nueva capa">
             <button onclick="addLayer()">Añadir</button>
-            <select id="layerSelect" onchange="changeLayer()">
+            <select id="layerSelect">
                 <option>Capa 1</option>
             </select>
-            <label><input type="checkbox" id="layerVisible" checked onchange="toggleLayerVisibility()"> Visible</label>
+            <label><input type="checkbox" id="layerVisible" checked> Visible</label>
         </div>
 
         <div class="block">
@@ -66,6 +98,50 @@
 
     <canvas id="canvas"></canvas>
 
-    <script src="script.js"></script>
+    <!-- JavaScript cargado al final para asegurar que DOM está listo -->
+    <script>
+        // Asegurarse de que el DOM está cargado antes de ejecutar JS
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Ajustar tamaño del canvas
+            function resizeCanvas() {
+                canvas.width = window.innerWidth - 300;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // Variables globales de ejemplo
+            let currentMode = 'line';
+            let currentColor = document.getElementById('colorPicker').value;
+            let currentAlpha = parseFloat(document.getElementById('alpha').value);
+            let lineWidth = parseInt(document.getElementById('lineWidth').value);
+            let currentUnit = document.getElementById('units').value;
+
+            // Funciones de ejemplo
+            window.setMode = (mode) => { currentMode = mode; console.log('Modo:', mode); }
+            window.setColor = () => { currentColor = document.getElementById('colorPicker').value; }
+            window.setAlpha = () => { currentAlpha = parseFloat(document.getElementById('alpha').value); }
+            window.setLineWidth = () => { lineWidth = parseInt(document.getElementById('lineWidth').value); }
+            window.setUnit = () => { currentUnit = document.getElementById('units').value; }
+
+            // Placeholder para otras funciones
+            window.toggleGrid = () => { console.log('Toggle Grid'); }
+            window.addLayer = () => { console.log('Añadir capa'); }
+            window.changeLayer = () => { console.log('Cambiar capa'); }
+            window.toggleLayerVisibility = () => { console.log('Toggle Layer Visibility'); }
+            window.undo = () => { console.log('Undo'); }
+            window.exportPNG = () => { console.log('Export PNG'); }
+            window.exportSVG = () => { console.log('Export SVG'); }
+
+            // Evento para color y alpha
+            document.getElementById('colorPicker').addEventListener('change', setColor);
+            document.getElementById('alpha').addEventListener('input', setAlpha);
+            document.getElementById('lineWidth').addEventListener('change', setLineWidth);
+            document.getElementById('units').addEventListener('change', setUnit);
+        });
+    </script>
 </body>
 </html>
