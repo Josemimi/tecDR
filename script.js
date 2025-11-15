@@ -1,92 +1,83 @@
-let mode = null;
-let gridEnabled = true;
-let gridSize = 25;
+@import url('https://fonts.googleapis.com/css2?family=Consolas:wght@400;700&display=swap');
 
-let startX = 0, startY = 0;
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-let objects = [];
-
-function setMode(m){ mode = m; }
-
-function setGridSize() {
-    gridSize = parseInt(document.getElementById("gridSize").value);
-    drawAll();
+body {
+    margin: 0;
+    font-family: Consolas, monospace;
+    display: flex;
+    height: 100vh;
+    background: #0A1A2F;
+    color: white;
 }
 
-function toggleGrid() {
-    gridEnabled = document.getElementById("toggleGrid").checked;
-    drawAll();
+#sidebar {
+    width: 260px;
+    padding: 20px;
+    background: #0A1A2F;
+    border-right: 3px solid #14A5FF;
+    overflow-y: auto;
 }
 
-canvas.addEventListener("mousedown", e => {
-    startX = e.offsetX;
-    startY = e.offsetY;
-});
-
-canvas.addEventListener("mouseup", e => {
-    let endX = e.offsetX;
-    let endY = e.offsetY;
-
-    if(mode === "line"){
-        objects.push({type:"line", x1:startX, y1:startY, x2:endX, y2:endY});
-    }
-    if(mode === "rect"){
-        objects.push({type:"rect", x:startX, y:startY, w:endX-startX, h:endY-startY});
-    }
-    if(mode === "circle"){
-        let r = Math.sqrt((endX-startX)**2 + (endY-startY)**2);
-        objects.push({type:"circle", x:startX, y:startY, r});
-    }
-    drawAll();
-});
-
-function drawGrid() {
-    ctx.strokeStyle = "#d5d5d5";
-    ctx.lineWidth = 0.5;
-
-    for(let x = 0; x < canvas.width; x += gridSize){
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
-        ctx.stroke();
-    }
-
-    for(let y = 0; y < canvas.height; y += gridSize){
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-        ctx.stroke();
-    }
+#sidebar h1 {
+    font-size: 22px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-function drawAll(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    if(gridEnabled) drawGrid();
-
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#000";
-
-    for(let obj of objects){
-        ctx.beginPath();
-        if(obj.type === "line"){
-            ctx.moveTo(obj.x1, obj.y1);
-            ctx.lineTo(obj.x2, obj.y2);
-        }
-        if(obj.type === "rect"){
-            ctx.rect(obj.x, obj.y, obj.w, obj.h);
-        }
-        if(obj.type === "circle"){
-            ctx.arc(obj.x, obj.y, obj.r, 0, Math.PI * 2);
-        }
-        ctx.stroke();
-    }
+#sidebar .ultra {
+    color: #14A5FF;
 }
 
-function undo(){
-    objects.pop();
-    drawAll();
+.block {
+    margin-bottom: 25px;
+    background: #112233;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #143A66;
 }
 
-drawAll();
+.block h3 {
+    margin-top: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #F2EFE9;
+}
+
+button {
+    width: 100%;
+    background: #14A5FF;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+    color: #0A1A2F;
+    font-weight: bold;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #5bc6ff;
+}
+
+.undo {
+    background: #F2EFE9 !important;
+    color: #0A1A2F !important;
+}
+
+input, select {
+    width: 100%;
+    padding: 6px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+#canvas {
+    flex: 1;
+    background: white;
+    display: block;
+    cursor: crosshair;
+}
+
