@@ -1,80 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>osemiSCAD ULTRA</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>osemiSCAD ULTRA</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="sidebar">
+        <h1>osemi<span class="ultra">SCAD</span></h1>
 
-<div id="sidebar">
-    <h1>osemiSCAD <span class="ultra">ULTRA</span></h1>
+        <div class="block">
+            <h3>Herramientas</h3>
+            <button onclick="setMode('line')">Línea</button>
+            <button onclick="setMode('rect')">Rectángulo</button>
+            <button onclick="setMode('circle')">Círculo</button>
+            <button onclick="setMode('ellipse')">Elipse</button>
+            <button onclick="setMode('triangle')">Triángulo</button>
+            <button onclick="setMode('arc')">Arco</button>
+            <button onclick="setMode('polyline')">Polilínea</button>
+            <button onclick="setMode('text')">Texto</button>
+        </div>
 
-    <div class="block">
-        <h3>Herramientas</h3>
-        <button onclick="setMode('line')">Línea</button>
-        <button onclick="setMode('rect')">Rectángulo</button>
-        <button onclick="setMode('circle')">Círculo</button>
-        <button onclick="setMode('ellipse')">Elipse</button>
-        <button onclick="setMode('triangle')">Triángulo</button>
-        <button onclick="setMode('arc')">Arco</button>
-        <button onclick="setMode('polyline')">Polilínea</button>
-        <button onclick="setMode('text')">Texto</button>
+        <div class="block">
+            <h3>Color & Opacidad</h3>
+            <input type="color" id="colorPicker" value="#14A5FF" onchange="setColor()">
+            <label>Opacidad: <input type="range" min="0" max="1" step="0.05" id="alpha" value="1" onchange="setAlpha()"></label>
+        </div>
+
+        <div class="block">
+            <h3>Grosor & Unidades</h3>
+            <label>Grosor: <input type="number" id="lineWidth" min="1" max="10" value="2" onchange="setLineWidth()"></label>
+            <label>Unidades: 
+                <select id="units" onchange="setUnit()">
+                    <option value="px">px</option>
+                    <option value="cm">cm</option>
+                    <option value="m">m</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="block">
+            <h3>Cuadrícula</h3>
+            <label>Tamaño: <input type="number" id="gridSize" value="25" onchange="setGridSize()"></label>
+            <label><input type="checkbox" id="gridToggle" checked onchange="toggleGrid()"> Mostrar cuadrícula</label>
+        </div>
+
+        <div class="block">
+            <h3>Capas</h3>
+            <input type="text" id="layerName" placeholder="Nueva capa">
+            <button onclick="addLayer()">Añadir</button>
+            <select id="layerSelect" onchange="changeLayer()">
+                <option>Capa 1</option>
+            </select>
+            <label><input type="checkbox" id="layerVisible" checked onchange="toggleLayerVisibility()"> Visible</label>
+        </div>
+
+        <div class="block">
+            <h3>Export & Undo</h3>
+            <button onclick="undo()" class="undo">Deshacer</button>
+            <button onclick="exportPNG()">Exportar PNG</button>
+            <button onclick="exportSVG()">Exportar SVG</button>
+        </div>
     </div>
 
-    <div class="block">
-        <h3>Propiedades</h3>
-        <label>Color</label>
-        <input type="color" id="colorPicker" value="#14A5FF" onchange="setColor()">
+    <canvas id="canvas"></canvas>
 
-        <label>Grosor línea</label>
-        <input type="number" id="lineWidth" value="2" min="1" max="10" onchange="setLineWidth()">
-
-        <label>Opacidad (0–1)</label>
-        <input type="number" id="alpha" value="1" step="0.1" min="0.1" max="1" onchange="setAlpha()">
-    </div>
-
-    <div class="block">
-        <h3>Unidades</h3>
-        <select id="units" onchange="setUnit()">
-            <option value="px">Pixeles</option>
-            <option value="cm">Centímetros</option>
-            <option value="m">Metros</option>
-        </select>
-    </div>
-
-    <div class="block">
-        <h3>Capas</h3>
-        <input type="text" id="layerName" placeholder="Nueva capa...">
-        <button onclick="addLayer()">Añadir</button>
-
-        <label>Seleccionar capa</label>
-        <select id="layerSelect" onchange="changeLayer()"></select>
-
-        <label>Visibilidad</label>
-        <input type="checkbox" id="layerVisible" checked onchange="toggleLayerVisibility()">
-    </div>
-
-    <div class="block">
-        <h3>Cuadrícula</h3>
-        <label>Tamaño</label>
-        <input type="number" id="gridSize" value="25" onchange="setGridSize()">
-
-        <label>Mostrar</label>
-        <input type="checkbox" id="gridToggle" checked onchange="toggleGrid()">
-    </div>
-
-    <div class="block">
-        <h3>Archivo</h3>
-        <button onclick="exportPNG()">Exportar PNG</button>
-        <button onclick="exportSVG()">Exportar SVG</button>
-    </div>
-
-    <button class="undo" onclick="undo()">Deshacer</button>
-</div>
-
-<canvas id="canvas"></canvas>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
